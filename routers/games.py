@@ -58,3 +58,9 @@ def delete_game(game_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Game not found")
     db.delete(game)
     db.commit()
+
+@router.get("/search/title", response_model=List[GameResponse])
+def search_by_title(q: str, db: Session = Depends(get_db)):
+    if not q:
+        raise HTTPException(status_code=400, detail="Search query cannot be empty")
+    return db.query(Game).filter(Game.title.ilike(f"%{q}%")).all()
