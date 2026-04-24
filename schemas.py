@@ -8,7 +8,7 @@ class GameBase(BaseModel):
     platform: str = Field(..., min_length=1, max_length=50)
     genre: Optional[str] = None
     release_year: Optional[int] = Field(None, ge=1970, le=2030)
-    status: Optional[str] = "wishlist"
+    status: Optional[str] = Field("wishlist", pattern="^(wishlist|playing|completed|dropped)$")
     rating: Optional[float] = Field(None, ge=1.0, le=10.0)
     notes: Optional[str] = None
 
@@ -22,7 +22,7 @@ class GameUpdate(BaseModel):
     platform: Optional[str] = None
     genre: Optional[str] = None
     release_year: Optional[int] = None
-    status: Optional[str] = None
+    status: Optional[str] = Field(None, pattern="^(wishlist|playing|completed|dropped)$")   
     rating: Optional[float] = Field(None, ge=1.0, le=10.0)
     notes: Optional[str] = None
 
